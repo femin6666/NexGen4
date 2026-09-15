@@ -10,6 +10,7 @@ class EvidenceBase(BaseModel):
     sourceText: str = Field(..., description="Original verbatim extract from the document")
     relatedStatement: Optional[str] = Field(default=None, description="Contrasting statement")
     explanation: Optional[str] = Field(default=None, description="Contextual explanation")
+    analysisId: Optional[str] = Field(default=None, description="Referenced Analysis ID")
 
 
 class EvidenceResponse(EvidenceBase):

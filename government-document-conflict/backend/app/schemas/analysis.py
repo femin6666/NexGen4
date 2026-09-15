@@ -17,7 +17,7 @@ class AnalysisBase(BaseModel):
 
 class AnalysisResponse(AnalysisBase):
     id: str = Field(..., alias="_id")
-    createdAt: str
+    createdAt: Optional[str] = None
     title: Optional[str] = "Document Comparison Analysis"
     isDemo: bool = False
 

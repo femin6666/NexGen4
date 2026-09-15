@@ -67,8 +67,21 @@ export const api = {
   },
 
   // Evidence
-  getEvidence: async (conflictId?: string): Promise<EvidenceItem[]> => {
-    const params = conflictId ? { conflict_id: conflictId } : {};
+  getEvidence: async (filters?: {
+    conflictId?: string;
+    documentId?: string;
+    analysisId?: string;
+    isDemo?: boolean;
+  } | string): Promise<EvidenceItem[]> => {
+    const params: Record<string, any> = {};
+    if (typeof filters === 'string') {
+      params.conflict_id = filters;
+    } else if (filters) {
+      if (filters.conflictId) params.conflict_id = filters.conflictId;
+      if (filters.documentId) params.document_id = filters.documentId;
+      if (filters.analysisId) params.analysis_id = filters.analysisId;
+      if (filters.isDemo !== undefined) params.is_demo = filters.isDemo;
+    }
     const res = await client.get<EvidenceItem[]>('/api/evidence', { params });
     return res.data;
   },

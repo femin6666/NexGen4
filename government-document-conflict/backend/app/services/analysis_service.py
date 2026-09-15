@@ -151,7 +151,12 @@ class AnalysisService:
             }
         ]
 
-        # Stage 5: Conflict Detection
+        # Stage 5: Conflict Detection & Analysis ID Setup
+        analysis_id = str(ObjectId())
+        analysis_title = custom_title.strip() if custom_title and custom_title.strip() else (
+            f"Comparative Audit: {doc_a_name} vs {doc_b_name}"
+        )
+
         conflict_1_id = str(ObjectId())
         conflict_2_id = str(ObjectId())
         conflict_3_id = str(ObjectId())
@@ -159,6 +164,7 @@ class AnalysisService:
         conflicts = [
             {
                 "_id": conflict_1_id,
+                "analysisId": analysis_id,
                 "statementAId": stmt_1_id,
                 "statementBId": stmt_2_id,
                 "conflictType": "NUMERIC_CONFLICT",
@@ -175,6 +181,7 @@ class AnalysisService:
             },
             {
                 "_id": conflict_2_id,
+                "analysisId": analysis_id,
                 "statementAId": stmt_3_id,
                 "statementBId": stmt_4_id,
                 "conflictType": "POLICY_CHANGE",
@@ -191,6 +198,7 @@ class AnalysisService:
             },
             {
                 "_id": conflict_3_id,
+                "analysisId": analysis_id,
                 "statementAId": stmt_2_id,
                 "statementBId": stmt_5_id,
                 "conflictType": "CONDITIONAL_DIFFERENCE",
@@ -207,10 +215,11 @@ class AnalysisService:
             }
         ]
 
-        # Stage 6: Evidence Citations
+        # Stage 6: Evidence Citations (Grounding to analyzed documents)
         evidences = [
             {
                 "_id": str(ObjectId()),
+                "analysisId": analysis_id,
                 "conflictId": conflict_1_id,
                 "documentId": str(doc_a["_id"]),
                 "pageNumber": 2,
@@ -224,6 +233,7 @@ class AnalysisService:
             },
             {
                 "_id": str(ObjectId()),
+                "analysisId": analysis_id,
                 "conflictId": conflict_1_id,
                 "documentId": str(doc_b["_id"]),
                 "pageNumber": 5,
@@ -237,6 +247,7 @@ class AnalysisService:
             },
             {
                 "_id": str(ObjectId()),
+                "analysisId": analysis_id,
                 "conflictId": conflict_2_id,
                 "documentId": str(doc_a["_id"]),
                 "pageNumber": 4,
@@ -250,6 +261,7 @@ class AnalysisService:
             },
             {
                 "_id": str(ObjectId()),
+                "analysisId": analysis_id,
                 "conflictId": conflict_3_id,
                 "documentId": str(doc_b["_id"]),
                 "pageNumber": 11,
@@ -264,11 +276,6 @@ class AnalysisService:
         ]
 
         # Stage 7: Analysis Dossier
-        analysis_id = str(ObjectId())
-        analysis_title = custom_title.strip() if custom_title and custom_title.strip() else (
-            f"Comparative Audit: {doc_a_name} vs {doc_b_name}"
-        )
-
         analysis_record = {
             "_id": analysis_id,
             "title": analysis_title,

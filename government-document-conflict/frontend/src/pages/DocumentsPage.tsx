@@ -14,7 +14,8 @@ import {
   Clock,
   AlertCircle,
   FileCheck,
-  GitCompare
+  GitCompare,
+  BookOpen
 } from 'lucide-react';
 import { api } from '../services/api';
 import { DocumentItem } from '../types';
@@ -232,6 +233,14 @@ export const DocumentsPage: React.FC = () => {
                     </td>
                     <td className="py-3.5 px-4 text-right">
                       <div className="flex items-center justify-end gap-2">
+                        <button
+                          onClick={() => navigate(`/evidence?documentId=${doc._id}`)}
+                          className="px-2.5 py-1 rounded bg-slate-100 text-gov-navy hover:bg-slate-200 border border-slate-200 text-xs font-semibold transition-colors flex items-center gap-1"
+                          title="View Verified Evidence for this Document"
+                        >
+                          <BookOpen className="w-3.5 h-3.5 text-gov-teal" />
+                          <span>Evidence</span>
+                        </button>
                         <button
                           onClick={() => navigate('/analysis')}
                           className="px-2.5 py-1 rounded bg-teal-50 text-gov-teal hover:bg-teal-100 border border-teal-200 text-xs font-semibold transition-colors flex items-center gap-1"
